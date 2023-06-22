@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mysql from 'mysql2';
 import 'dotenv/config';
+import fs from 'fs';
 
 const app = express();
 
@@ -14,14 +15,15 @@ app.listen(4000, () => {
 )
 
 app.get("/", (req,res) => {
-    res.send("Hello from Node halløhj!");
+    res.send("Hello from Node halløj!");
 })
 
 const connection = mysql.createConnection({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     database: process.env.MYSQL_DATABASE,
-    password: process.env.MYSQL_PASSWORD
+    password: process.env.MYSQL_PASSWORD,
+    ssl: {cs: fs.readFileSync("DigiCertGlobalRootCA.crt.pem")}
 });
 
 
